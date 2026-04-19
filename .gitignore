@@ -201,6 +201,21 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Odoo specific
+*.swp
+*.bak
+*.tmp
+
+# Translations temp
+*.po~
+
+# Database backups
+*.sql
+*.dump
+
+# Odoo sessions 
+.sessions
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
