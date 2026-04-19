@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_res_config_settings_smart_margin_sale" model="ir.ui.view">
+        <field name="name">res.config.settings.smart.margin.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//app[@name='sale_management']" position="inside">
+                <block title="Smart Margin Configuration">
+                    <setting>
+                        <group>
+                            <field name="smart_margin_overhead_type"/>
+                            <field name="smart_margin_overhead_value"/>
+                            <field name="smart_margin_overhead_apply_on"/>
+                        </group>                 
+                    </setting>                       
+                </block>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,146 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="smart_margin.MarginInfo" owl="1">
+        <div class="o_margin_info_modal p-3">
+
+            <!-- 🔹 HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="mb-0">📊 Margin Dashboard</h1>
+                <button class="btn btn-primary" t-on-click="goBack">
+                    Close
+                </button>
+            </div>
+
+            <!-- 🔹 TOTALS CARDS -->
+            <div class="row g-3 mb-4 text-center fs-6">
+
+                <div class="col">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="text-muted">Revenue</h3>
+                            <h3 class="fw-bold text-primary">
+                                <t t-esc="state.totals.total_revenue"/>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="text-muted">COGS</h3>
+                            <h3 class="fw-bold text-danger">
+                                <t t-esc="state.totals.total_cogs"/>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="text-muted">Overhead</h3>
+                            <h3 class="fw-bold text-warning">
+                                <t t-esc="state.totals.overhead_amount"/>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="text-muted">Net Margin</h3>
+                            <h3 t-att-class="'fw-bold ' + (
+                                state.totals.margin_color === 'green' ? 'text-success' :
+                                state.totals.margin_color === 'yellow' ? 'text-warning' :
+                                'text-danger'
+                            )">
+                                <t t-esc="state.totals.net_margin"/>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h3 class="text-muted">Margin %</h3>
+                            <h3 class="fw-bold">
+                               <h3 t-att-class="'fw-bold ' + (
+                                    state.totals.margin_color === 'green' ? 'text-success' :
+                                    state.totals.margin_color === 'yellow' ? 'text-warning' :
+                                    'text-danger'
+                                )">
+                                    <t t-esc="state.totals.margin_percentage.toFixed(2)"/> %
+                                </h3>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 🔹 TABLE -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-3">Margin Lines</h5>
+
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-center">Qty</th>
+                                <th class="text-end">Unit Price</th>
+                                <th class="text-end">Revenue</th>
+                                <th class="text-end">Landed</th>
+                                <th class="text-end">Overhead</th>
+                                <th class="text-end">Cost</th>
+                                <th class="text-end">Margin</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-foreach="state.lines" t-as="line" t-key="line.product_name">
+                                <tr>
+                                    <td>
+                                        <strong><t t-esc="line.product_name"/></strong>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <t t-esc="line.qty"/>
+                                    </td>
+
+                                    <td class="text-end">
+                                        <t t-esc="line.unit_price"/>
+                                    </td>
+
+                                    <td class="text-end text-primary">
+                                        <t t-esc="line.revenue"/>
+                                    </td>
+
+                                    <td class="text-end">
+                                        <t t-esc="line.landed_cost"/>
+                                    </td>
+
+                                    <td class="text-end text-warning">
+                                        <t t-esc="line.overhead_cost"/>
+                                    </td>
+
+                                    <td class="text-end text-danger">
+                                        <t t-esc="line.total_cost"/>
+                                    </td>
+
+                                    <td class="text-end">                                       
+                                        <t t-esc="line.margin"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </t>
+</templates>
