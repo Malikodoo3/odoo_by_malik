@@ -1,0 +1,99 @@
+<odoo>
+    <record id="view_order_form_smart_margin" model="ir.ui.view">
+        <field name="name">sale.order.form.smart.margin</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                 <button name="action_open_margin_breakdown" type="object" class="oe_stat_button" icon="fa-line-chart" invisible="state != 'sale'"> 
+                    <div class="o_stat_info" style=""> 
+                        <span class="o_stat_text" style="font-size: 12px; font-weight: bold;">Smart Margin:</span> 
+                    </div> 
+                    <div style="margin: 5px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50px; width: 80px; text-align: center;"> 
+                        <span class="o_stat_value" style="font-weight: bold; font-size: 12px;"> 
+                            <field name="net_margin" widget="monetary"/> 
+                        </span> 
+                        <span style="font-size: 12px;"> 
+                            (<field name="margin_percentage"/> %) 
+                        </span> 
+                    </div> 
+                </button> 
+            </xpath>
+            <xpath expr="//group[@name='partner_details']" position="inside">
+                <field name="delivery_time" widget='date'/>
+                <field name="margin_id" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Wizard Form View -->
+    <record id="view_margin_wizard_form" model="ir.ui.view">
+        <field name="name">sale.order.margin.wizard.form</field>
+        <field name="model">sale.order.margin.wizard</field>
+        <field name="arch" type="xml">
+
+            <form string="Margin Breakdown">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="order_id" string="Order Reference"/>
+                        <h1>
+                            <div class="d-flex">
+                                <field name="order_id" class="text-break" />
+                            </div>
+                        </h1>
+                    </div>
+                    <!-- SUMMARY -->
+                    <group string="Summary">
+                        <group >
+                            <field name="total_revenue" widget="monetary" readonly="1"/>
+                            <field name="total_cogs" widget="monetary" readonly="1"/>
+                            <field name="net_margin" widget="monetary" readonly="1"/>
+                            <field name="margin_percentage" readonly="1"/>
+                        </group>
+                        <group >
+                            <field name="total_overhead" widget="monetary" readonly="1"/>
+                            <field name="tax_on_company" widget="monetary" readonly="1"/>
+                            <field name="discount_on_company" widget="monetary" readonly="1"/>                        
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids" readonly="1">
+                                <tree string="Margin Lines">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="unit_price" widget="monetary" />
+                                    <field name="landed_cost" widget="monetary" />
+                                    <field name="overhead" widget="monetary" />
+                                    <field name="tax_on_company" widget="monetary" />
+                                    <field name="discount_on_company" widget="monetary" />
+                                    <field name="line_margin" widget="monetary" />
+                                    <field name="currency_id" string="" invisible="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Close" class="btn-primary" special="cancel"/>
+                        <button string="Download Margin PDF"
+                                type="object"
+                                name="action_generate_margin_pdf_chatter"
+                                class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_smart_margin_dashboard" model="ir.actions.client">
+        <field name="name">Margin Dashboard</field>
+        <field name="tag">smart_margin_dashboard.action_margin_list</field> 
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="margin_report_menu"
+        name="Margin Report"
+        parent="sale.menu_sale_report"
+        action="action_smart_margin_dashboard"
+        sequence="100"/>
+</odoo>

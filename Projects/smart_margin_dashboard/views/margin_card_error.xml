@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="margin_card_not_found" name="Margin Card Not Found" >
+        <t t-call="website.layout">
+            <div class="container mt-5 text-center">
+                <h2 class="text-danger mb-4">Oops! Margin Card Not Found ❌</h2>
+                <p class="lead">
+                    The link you followed is invalid or expired.
+                </p>
+                <p>
+                    Please contact our support if you believe this is a mistake.
+                </p>
+                <a href="/" class="btn btn-primary mt-3">Go to Home</a>
+            </div>
+        </t>
+    </template>
+</odoo>

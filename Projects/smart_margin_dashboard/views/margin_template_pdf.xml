@@ -1,0 +1,137 @@
+<odoo>
+  <template id="report_sale_order_margin_wizard_pdf">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="wizard">
+        <t t-call="web.internal_layout">
+          <div class="page" style="font-family: 'Arial', sans-serif;">
+
+            <!-- Title -->
+            <div class="oe_title">
+              <label>Order Reference</label>
+              <h1>
+                <div class="d-flex">
+                  <t t-esc="wizard.order_id.name"/>
+                </div>
+              </h1>
+            </div>
+
+           <!-- SUMMARY -->
+            <h3 style="margin-top:20px;">Summary</h3>
+
+            <div class="row mt16 mb-2">
+
+                <div class="col-3 m-1">
+                    <div style="border:3px solid #ddd;padding:10px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Total Revenue</div>
+                    <hr/>
+                    <div style="font-size:20px;font-weight:bold;">
+                        <t t-esc="wizard.total_revenue" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-3 m-1">
+                    <div style="border:3px solid #ddd;padding:10px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Total COGS</div>
+                    <hr/>
+                    <div style="font-size:20px;font-weight:bold;">
+                        <t t-esc="wizard.total_cogs" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-3 m-1">
+                    <div style="border:3px solid #ddd;padding:10px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Net Margin</div>
+                    <hr/>
+                    <div style="font-size:20px;font-weight:bold;">
+                        <t t-esc="wizard.net_margin" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-2 m-1">
+                    <div style="border:3px solid #ddd;padding:10px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Margin %</div>
+                    <hr/>
+                    <div style="font-size:20px;font-weight:bold;">
+                        <t t-esc="wizard.margin_percentage" t-options='{"widget": "float", "precision": 2}'/>%
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+
+            <div class="row mt16 mb-2">
+
+                <div class="col-4 m-1">
+                    <div style="border:3px solid #ddd;padding:8px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Total Overhead</div>
+                    <hr/>
+                    <div style="font-size:18px;font-weight:bold;">
+                        <t t-esc="wizard.total_overhead" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-4 m-1">
+                    <div style="border:3px solid #ddd;padding:8px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Total Taxes</div>
+                    <hr/>
+                    <div style="font-size:18px;font-weight:bold;">
+                        <t t-esc="wizard.tax_on_company" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-3 m-1">
+                    <div style="border:3px solid #ddd;padding:8px;border-radius:6px;text-align:center;">
+                    <div class="mb-1" style="font-size:15px;color:#777;">Total Discount</div>
+                    <hr/>
+                    <div style="font-size:18px;font-weight:bold;">
+                        <t t-esc="wizard.discount_on_company" t-options='{"widget": "float", "precision": 2}'/>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- LINES -->
+            <h3>Lines</h3>
+            <table class="table table-sm table-bordered">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Qty</th>
+                  <th>Unit Price</th>
+                  <th>Landed Cost</th>
+                  <th>Overhead</th>
+                  <th>Tax</th>
+                  <th>Discount</th>
+                  <th>Line Margin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr t-foreach="wizard.line_ids" t-as="line">
+                  <td><t t-esc="line.product_id.display_name"/></td>
+                  <td><t t-esc="line.qty"/></td>
+                  <td><t t-esc="line.unit_price" t-options='{"widget": "float", "precision": 2}'/></td>
+                  <td><t t-esc="line.landed_cost" t-options='{"widget": "float", "precision": 2}'/></td>
+                  <td><t t-esc="line.overhead" t-options='{"widget": "float", "precision": 2}'/></td>
+                  <td><t t-esc="line.tax_on_company" t-options='{"widget": "float", "precision": 2}'/></td>
+                  <td><t t-esc="line.discount_on_company" t-options='{"widget": "float", "precision": 2}'/></td>
+                  <td><t t-esc="line.line_margin" t-options='{"widget": "float", "precision": 2}' /></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="text-center mt-3" style="font-size:12px;">
+              Generated from Odoo
+            </div>
+
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

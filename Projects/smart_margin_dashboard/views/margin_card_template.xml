@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="margin_card_template" name="Margin Card Template">
+        <t t-call="website.layout">
+            <style>
+                .text-primary {
+                    color: #0d6efd;
+                }
+                .lead {
+                    font-size: 1.125rem;
+                }
+            </style>
+
+            <div class="page">
+                <div class="d-flex justify-content-center align-items-center"
+                     style="min-height: 100vh;">
+                    <div class="container" style="max-width:650px;">
+
+                        <h3 class="text-center mb-3">
+                            Hello <t t-esc="partner.name"/> 👋
+                        </h3>
+
+                        <p class="text-center mb-4 lead">
+                            Here is your final order information for <strong><t t-esc="order.name"/></strong>:
+                        </p>
+
+                        <table class="table table-bordered mt-3">
+                            <tbody>
+                                <tr>
+                                    <th>Final Price</th>
+                                    <td><t t-esc="order.margin_id.total_cogs"/> AED</td>
+                                </tr>
+                                <tr>
+                                    <th>Delivery Time</th>
+                                    <td><t t-esc="order.delivery_time"/></td>
+                                </tr>
+                                <t t-if="is_margin_manager">
+                                    <tr>
+                                        <th>Net Margin</th>
+                                        <td>
+                                            <span t-att-style="'color:' + (
+                                                '#198754' if order.margin_id.margin_color == 'green'
+                                                else '#d39e00' if order.margin_id.margin_color == 'yellow'
+                                                else '#dc3545'
+                                            )">
+                                                <t t-esc="order.margin_id.net_margin"/> AED
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Margin %</th>
+                                        <td>
+                                           <span t-att-style="'color:' + (
+                                                '#198754' if order.margin_id.margin_color == 'green'
+                                                else '#d39e00' if order.margin_id.margin_color == 'yellow'
+                                                else '#dc3545'
+                                            )">
+                                                <t t-esc="order.margin_id.margin_percentage"
+                                                t-options='{"widget": "float", "precision": 2}'/> %
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4 text-center">
+                            <p>
+                                Thank you for being our valued customer! 💙
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

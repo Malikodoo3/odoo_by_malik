@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve"  owl="1">
+    <t t-name="smart_margin_dashboard.marginList">
+        <div class="owl-fullscreen-wrapper">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-center fw-bold fs-2">
+                    Margin List
+                </div>
+                <div class="d-flex justify-content-between  align-items-center pt-2 px-3">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle " type="button" data-bs-toggle="dropdown">
+                            Filter by Margin Color
+                        </button>
+                        <ul class="dropdown-menu">
+                            <t t-foreach="['green','yellow','red']" t-as="color" t-key="color">
+                                <li>
+                                    <label class="dropdown-item">
+                                        <input type="checkbox"
+                                            class="form-check-input me-2"
+                                            t-att-value="color"
+                                            t-att-checked="state.selectedColors.includes(color)"
+                                            t-on-click="() => this.toggleColor(color)" />
+                                        <t t-esc="color"/>
+                                    </label>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                    <div class="">
+                        <button class="btn btn-outline-success fw-bold" type="button" t-on-click="downloadXlsx">
+                            Download Xlsx
+                        </button>
+                    </div>
+                </div>        
+                <div class="card-body mt-0">
+                    <div>
+                        <table class="table table-bordered table-hover table-sm align-middle mb-0 text-center">
+                            <thead class="table-light fw-bold">
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Total Revenue</th>
+                                    <th>Total COGS</th>
+                                    <th>Margin</th>
+                                    <th>Margin %</th>
+                                    <th>Show Info</th>
+                                    <th>Order Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.margins" t-as="margin" t-key="margin.id">
+                                    <tr t-att-style="
+                                        margin.margin_color === 'green' ? 'background-color:#d4edda;' :
+                                        margin.margin_color === 'yellow' ? 'background-color:#fff3cd;' :
+                                        'background-color:#f8d7da;'
+                                    ">
+                                        <td><t t-esc="margin.partner_id[1]"/></td>
+                                        <td><t t-esc="margin.total_revenue.toFixed(2)"/></td>
+                                        <td><t t-esc="margin.total_cogs.toFixed(2)"/></td>
+                                        <td><t t-esc="margin.net_margin.toFixed(2)"/></td>
+                                        <td><t t-esc="margin.margin_percentage.toFixed(2)"/>%</td>
+                                        <td> 
+                                            <button class="btn btn-sm btn-primary fw-bold"
+                                                t-on-click="() => this.showMarginInfo(margin)">
+                                                Show Info
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary fw-bold"
+                                                    t-on-click="() => this.openSaleOrder(margin)">
+                                                Open Order
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="o-pager paginating d-flex justify-content-center mt-3">
+                        <Pager offset="state.offset"
+                            limit="state.limit"
+                            total="state.total"
+                            onUpdate.bind="onPageUpdate"
+                            isEditable="false"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

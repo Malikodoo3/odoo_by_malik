@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_report_sale_order_margin_wizard_pdf" model="ir.actions.report">
+        <field name="name">Sale Order Margin</field>
+        <field name="model">sale.order.margin.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">smart_margin_dashboard.report_sale_order_margin_wizard_pdf</field>
+        <field name="report_file">smart_margin_dashboard.report_sale_order_margin_wizard_pdf</field>
+        <field name="print_report_name">'Margin-%s' % (object.order_id.name)</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve" owl="1">
+    <t t-name="smart_margin_dashboard.MarginInfo" owl="1">
+        <Dialog title="'Margin Details'" size="'xl'">
+            <div class="p-3">
+
+                <!-- SUMMARY -->
+                <table class="table table-sm table-bordered mb-4" t-if="state.totals">
+                    <tbody>
+                        <tr>
+                            <th>Total Revenue</th>
+                            <td>
+                                <t t-esc="state.totals.total_revenue ? state.totals.total_revenue.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Total COGS</th>
+                            <td>
+                                <t t-esc="state.totals.total_cogs ? state.totals.total_cogs.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Net Margin</th>
+                            <td>
+                                <t t-esc="state.totals.net_margin ? state.totals.net_margin.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Margin %</th>
+                            <td>
+                                <t t-esc="state.totals.margin_percentage ? state.totals.margin_percentage.toFixed(2) : '0.00'"/>%
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Total Overhead</th>
+                            <td>
+                                <t t-esc="state.totals.total_overhead ? state.totals.total_overhead.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Total Tax</th>
+                            <td>
+                                <t t-esc="state.totals.tax_on_company ? state.totals.tax_on_company.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Total Discount</th>
+                            <td>
+                                <t t-esc="state.totals.discount_on_company ? state.totals.discount_on_company.toFixed(2) : '0.00'"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- LINES -->
+                <table class="table table-bordered table-sm" t-if="state.lines.length">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Unit Price</th>
+                            <th>Landed Cost</th>
+                            <th>Overhead</th>
+                            <th>Tax</th>
+                            <th>Discount</th>
+                            <th>Line Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="state.lines" t-as="line" t-key="line.product_name">
+                            <tr>
+                                <td><t t-esc="line.product_name"/></td>
+                                <td><t t-esc="line.qty || 0"/></td>
+                                <td><t t-esc="line.unit_price ? line.unit_price.toFixed(2) : '0.00'"/></td>
+                                <td><t t-esc="line.landed_cost ? line.landed_cost.toFixed(2) : '0.00'"/></td>
+                                <td><t t-esc="line.overhead ? line.overhead.toFixed(2) : '0.00'"/></td>
+                                <td><t t-esc="line.tax_on_company ? line.tax_on_company.toFixed(2) : '0.00'"/></td>
+                                <td><t t-esc="line.discount_on_company ? line.discount_on_company.toFixed(2) : '0.00'"/></td>
+                                <td><t t-esc="line.line_margin ? line.line_margin.toFixed(2) : '0.00'"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+            </div>
+        </Dialog>
+    </t>
+</templates>

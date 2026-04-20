@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="margin_card_email_template" model="mail.template">
+        <field name="name">Margin Card Email</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Your Margin Card for Order</field>
+        <field name="email_from">malik.saffour@gmail.com</field>
+        <field name="auto_delete" eval="False"/>
+
+        <field name="body_html" type="html">
+
+            <!-- Base URL -->
+            <t t-set="base_url" t-value="env['ir.config_parameter'].sudo().get_param('web.base.url')"/>
+
+            <!-- Margin Card URL -->
+            <t t-set="margin_url" t-value="object._generate_margin_card_url()"/>
+
+            <!-- QR Code URL -->
+            <t t-set="qr_url"
+                t-value="'%s/report/barcode/QR/%s?width=200&amp;height=200' % (base_url, margin_url)"/>
+
+            <div style="font-family: Arial, sans-serif; max-width:600px; margin:auto; padding:20px; border:1px solid #e2e2e2; border-radius:8px;">
+
+                <!-- Logo -->
+                <div style="text-align:center; margin-bottom:20px;">
+                    <img t-att-src="'/web/image/res.company/%s/logo' % object.company_id.id"
+                         alt="Malik Company"
+                         style="height:60px;"/>
+                </div>
+
+                <!-- Greeting -->
+                <p style="font-size:16px;">
+                    Dear <strong><t t-esc="object.partner_id.name"/></strong>,
+                </p>
+
+                <p style="font-size:15px;">
+                    Your Margin Card for order <strong><t t-esc="object.name"/></strong> is ready! 🌟<br/>
+                    You can view your final order price and delivery time below.
+                </p>
+
+                <!-- Button -->
+                <p style="text-align:center; margin:20px 0;">
+                    <a t-att-href="margin_url" style="background-color:#1a73e8; color:#fff; padding:12px 24px; text-decoration:none; border-radius:5px; display:inline-block;">
+                        View Margin Card
+                    </a>
+                </p>
+
+                <!-- QR Code -->
+                <div style="text-align:center; margin:30px 0;">
+                    <img t-att-src="qr_url"
+                         alt="Scan to view Margin Card"
+                         style="width:150px; height:150px; border:1px solid #ccc; padding:5px;"/>
+                    <p style="font-size:13px; color:#666;">
+                        Scan QR code to view your Margin Card
+                    </p>
+                </div>
+
+                <p style="font-size:14px;">
+                    If you have any questions, feel free to contact our support team.
+                </p>
+
+                <hr style="margin-top:40px;"/>
+
+                <p style="font-size:11px; color:#999; text-align:center;">
+                    This is a private message. Your order details are confidential.
+                </p>
+            </div>
+
+        </field>
+    </record>
+
+</odoo>
